@@ -1,3 +1,7 @@
 *.ini
 *.tpu
 *.bak
+*.o
+*.ppu
+*.exe
+saper

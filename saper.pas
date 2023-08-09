@@ -1,7 +1,18 @@
-{программа должна компилироваться в TPW}
+{todo:
+РѕРїСЂРµРґРµР»РµРЅРёРµ С‚РµРєСѓС‰РµР№ РґРёСЂРµРєС‚РѕСЂРёРё РґР»СЏ cfg-С„Р°Р№Р»Р°
+СЃРїСЂР°РІРєР° Рѕ С‚РѕРј, 
+    РєР°Рє Р·Р°РєСЂС‹С‚СЊ,
+    РєР°Рє СѓРїСЂР°РІР»СЏС‚СЊ
+    РіРґРµ cfg-С„Р°Р№Р»
+    РєР°РєРёРµ С†РёС„СЂС‹ С‡С‚Рѕ РѕР·РЅР°С‡Р°СЋС‚
+    РѕСЃС‚Р°РІРёС‚СЊ РѕРґРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    РґРѕР±Р°РІРёС‚СЊ СѓРїСЂР°РІР»РµРЅРёРµ СЃС‚СЂРµР»РєР°РјРё
+    РїСЂР°РІСѓСЋ Р»РёРЅРµР№РєСѓ
+}
+{РїСЂРѕРіСЂР°РјРјР° РґРѕР»Р¶РЅР° РєРѕРјРїРёР»РёСЂРѕРІР°С‚СЊСЃСЏ РІ TPW}
 program saper_professional;
 uses crt,moy,baseofsa,mytime;
-{x - горизонталь,y - вертикаль}              {$F+}
+{x - РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊ,y - РІРµСЂС‚РёРєР°Р»СЊ}              {$F+}
 const min='*';
       fl='!';
       wfl='x';
@@ -19,24 +30,24 @@ const min='*';
       lenghtstack=12760;
 type kldetect=function(y,x:byte):boolean;
      kldoing=procedure(y,x:byte;var otv:byte);
-var stack:array[0..lenghtstack]of record                {стек}
+var stack:array[0..lenghtstack]of record                {СЃС‚РµРє}
                   x,y,otv:byte;
                           end;
-    stkpointh,stkpointl:word;                           {и все с ним связанное}
-    igr :array[1..maxkolvoigr] of record              {для кпаждого игрока:}
+    stkpointh,stkpointl:word;                           {Рё РІСЃРµ СЃ РЅРёРј СЃРІСЏР·Р°РЅРЅРѕРµ}
+    igr :array[1..maxkolvoigr] of record              {РґР»СЏ РєРїР°Р¶РґРѕРіРѕ РёРіСЂРѕРєР°:}
                       name:string;
                        up,down,left,right,k1,k2,kurs:char;
                                 x,y:byte;
                                end;
-    reginput:(nonfluging,standart,fluging1,fluging2);  {режим ввода}
-    regproc:(allyouself,auto0,automatic,automatic_);    {режим автоматики}
+    reginput:(nonfluging,standart,fluging1,fluging2);  {СЂРµР¶РёРј РІРІРѕРґР°}
+    regproc:(allyouself,auto0,automatic,automatic_);    {СЂРµР¶РёРј Р°РІС‚РѕРјР°С‚РёРєРё}
     fk1_,fk2_,open_:kldoing;
     ppf:array[1..8]of byte;
-    h0,l0,kolvoigr:byte;                {размеры поля, и kolvoigr}
-    kolvomin:word;                                      {количество мин на поле(константа в течении игры)}
-    km:integer;                                         {=kolvomin-количество флажков}
-    kl,nopkl:word;                    {количество (всего и неоткрытых) клеток за исключением количества мин;}
-    scr:record                       {координаты левого верхнего угла экрана}
+    h0,l0,kolvoigr:byte;                {СЂР°Р·РјРµСЂС‹ РїРѕР»СЏ, Рё kolvoigr}
+    kolvomin:word;                                      {РєРѕР»РёС‡РµСЃС‚РІРѕ РјРёРЅ РЅР° РїРѕР»Рµ(РєРѕРЅСЃС‚Р°РЅС‚Р° РІ С‚РµС‡РµРЅРёРё РёРіСЂС‹)}
+    km:integer;                                         {=kolvomin-РєРѕР»РёС‡РµСЃС‚РІРѕ С„Р»Р°Р¶РєРѕРІ}
+    kl,nopkl:word;                    {РєРѕР»РёС‡РµСЃС‚РІРѕ (РІСЃРµРіРѕ Рё РЅРµРѕС‚РєСЂС‹С‚С‹С…) РєР»РµС‚РѕРє Р·Р° РёСЃРєР»СЋС‡РµРЅРёРµРј РєРѕР»РёС‡РµСЃС‚РІР° РјРёРЅ;}
+    scr:record                       {РєРѕРѕСЂРґРёРЅР°С‚С‹ Р»РµРІРѕРіРѕ РІРµСЂС…РЅРµРіРѕ СѓРіР»Р° СЌРєСЂР°РЅР°}
         x,y:byte
         end;
     i,j:byte;
@@ -45,58 +56,58 @@ var stack:array[0..lenghtstack]of record                {стек}
     inf:string;//[scrl*2-posinf];
 {content procedures
 moy.tpu
-  ------------------------------------------------стандартные и базовые логические функции
-  function minim(a,b:longint):longint;      нез.
-  function max(a,b:integer):integer;              нез.
-  function st(x,y:integer):longint;               нез.
-  function bit(x,n:byte):byte;          нез.
-  procedure pbit(var x:byte;n:byte;b:boolean);    пуст.
-  ------------------------------------------------стандартные вывода и отладочные
-  function bts(x:boolean):string;      нез.
-  function its(x,l:longint):string;               нез.
-  procedure writeyx(y,x:byte;s:string);           нез.выв.
+  ------------------------------------------------СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ Рё Р±Р°Р·РѕРІС‹Рµ Р»РѕРіРёС‡РµСЃРєРёРµ С„СѓРЅРєС†РёРё
+  function minim(a,b:longint):longint;      РЅРµР·.
+  function max(a,b:integer):integer;              РЅРµР·.
+  function st(x,y:integer):longint;               РЅРµР·.
+  function bit(x,n:byte):byte;          РЅРµР·.
+  procedure pbit(var x:byte;n:byte;b:boolean);    РїСѓСЃС‚.
+  ------------------------------------------------СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РІС‹РІРѕРґР° Рё РѕС‚Р»Р°РґРѕС‡РЅС‹Рµ
+  function bts(x:boolean):string;      РЅРµР·.
+  function its(x,l:longint):string;               РЅРµР·.
+  procedure writeyx(y,x:byte;s:string);           РЅРµР·.РІС‹РІ.
   procedure mes_(s:string);                       writeyx(20,1,s);
   procedure mes(s:string);                        -||-+readln
-baseofsaper.tpu---------------------------------базовые логические функции
-  function mina(y,x:byte):boolean;    [pole](7-й бит)use(bit)
-  function flag(y,x:byte):boolean;    [pole](6-й бит)use(bit)
-  function cifra(y,x:byte):byte;      [pole](биты 0-3)
+baseofsaper.tpu---------------------------------Р±Р°Р·РѕРІС‹Рµ Р»РѕРіРёС‡РµСЃРєРёРµ С„СѓРЅРєС†РёРё
+  function mina(y,x:byte):boolean;    [pole](7-Р№ Р±РёС‚)use(bit)
+  function flag(y,x:byte):boolean;    [pole](6-Р№ Р±РёС‚)use(bit)
+  function cifra(y,x:byte):byte;      [pole](Р±РёС‚С‹ 0-3)
   function notopen(y,x:byte):boolean;             use(cifra,flag)
   procedure pmina(y,x:byte;m:boolean);            /[pole]use(mina)
   procedure pflag(y,x:byte;f:boolean);            /[pole]use(flag)
   procedure pcifra(y,x,c:byte);                   /[pole]
-------------------------------------------------функции времени
+------------------------------------------------С„СѓРЅРєС†РёРё РІСЂРµРјРµРЅРё
 mytime.tpu
-  procedure dt(var rez:ttime;x1,x2:ttime);        нез.(x1-x2)
-  procedure moygettime(var t:ttime);              нез.use_(gettime)
+  procedure dt(var rez:ttime;x1,x2:ttime);        РЅРµР·.(x1-x2)
+  procedure moygettime(var t:ttime);              РЅРµР·.use_(gettime)
 procedure stoptime;            ...gotime        /[time0](time0:=tec-time0)use(moygettime,dt)
 procedure outtime;                              [time0,start,game]use(moygettime,dt,writexy,its)
-            (выв. (в инф.стр.)с поз.7,6 поз.:if start(if game(tec-time0)else(time0)))
-------------------------------------------------вывод
+            (РІС‹РІ. (РІ РёРЅС„.СЃС‚СЂ.)СЃ РїРѕР·.7,6 РїРѕР·.:if start(if game(tec-time0)else(time0)))
+------------------------------------------------РІС‹РІРѕРґ
 function tinscr(y,x:byte):boolean;    [scr.y,scr.x.scrh,scrl]
-function cursinscr(y,x:byte):boolean;    [scr.y,scr.x.scrh,scrl,otst](по1хоже не учитывает краевых эффектов)
-function xpr(x:byte;b:boolean):byte;            нез.(b:true - out0 false - outcurs)
+function cursinscr(y,x:byte):boolean;    [scr.y,scr.x.scrh,scrl,otst](РїРѕ1С…РѕР¶Рµ РЅРµ СѓС‡РёС‚С‹РІР°РµС‚ РєСЂР°РµРІС‹С… СЌС„С„РµРєС‚РѕРІ)
+function xpr(x:byte;b:boolean):byte;            РЅРµР·.(b:true - out0 false - outcurs)
 procedure out0(y,x:byte);      [game,fl,no,min,wfl,cf,scr.x,scr.y]use(notopen,flag,mina,cifra,writexy,xpr)
-            (...точка взрыва)
+            (...С‚РѕС‡РєР° РІР·СЂС‹РІР°)
 procedure outcurs0(y,x:byte;kurs:char);         [scr.y,scr.x]use(writexy,xpr)
-procedure outmin;                               (выв. (в инф.стр.)сначала,5 поз.)[scrh,km]use(writexy,its)
-procedure outinf;                               (inf с posinf)[inf,posinf,scrh]use(outmin,outtime,writexy)
-procedure outall;                               [kolvoigr,igr:x,y,kurs;,scr.y,scr.x,scrh,scrl](...виртуальный экран)
+procedure outmin;                               (РІС‹РІ. (РІ РёРЅС„.СЃС‚СЂ.)СЃРЅР°С‡Р°Р»Р°,5 РїРѕР·.)[scrh,km]use(writexy,its)
+procedure outinf;                               (inf СЃ posinf)[inf,posinf,scrh]use(outmin,outtime,writexy)
+procedure outall;                               [kolvoigr,igr:x,y,kurs;,scr.y,scr.x,scrh,scrl](...РІРёСЂС‚СѓР°Р»СЊРЅС‹Р№ СЌРєСЂР°РЅ)
             use(out0,outcurs0,tinscr,outinf,outtime)
 procedure out(y,x:byte);                       use(tinscr,out0){[scr.x,scr.y,scrh,scrl]use(outall)
 procedure outcurs(i:byte);                      /[scr.y,scr.x][scrl,scrh,l0,h0(?),igr[i]:x,y,kurs;otst]
             use(cursinscr,outcurs0,max,outall,)(+inf +...)
-procedure clrcurs(y_,x_,n:byte);                (+выводит затертый курсор)[kolvoigr,igr:x,y,kurs]use(tinscr,outcurs0)
-------------------------------------------------ядро
+procedure clrcurs(y_,x_,n:byte);                (+РІС‹РІРѕРґРёС‚ Р·Р°С‚РµСЂС‚С‹Р№ РєСѓСЂСЃРѕСЂ)[kolvoigr,igr:x,y,kurs]use(tinscr,outcurs0)
+------------------------------------------------СЏРґСЂРѕ
 procedure win;                        /[nopkl,game,inf]use(stoptime,outall)(dec(nopkl))
 procedure gamover(otv:byte);          /[game,inf][ppf,nbf]use(stoptime,outall)use(set)
 procedure around(y,x:byte;var otv:byte;detect:kldetect;doing:kldoing);
                         [game](if (y>=1)and(y<=h0)and(x>=1)and(x<=l0)and detect(y,x)and game)
 {procedure aroundbit(y,x,otv:byte;var z:byte;detect:kldetect;doing:kldoing);
-function all(y,x:byte):boolean;          нез.
+function all(y,x:byte):boolean;          РЅРµР·.
 function openb(y,x:byte):boolean;        =not notopen(y,x);
 procedure fk12(y,x:byte;var otv:byte);      <=>fk2_(y,x,otv);fk1_(y,x,otv);
-procedure openz(y,x:byte; var z:byte);          пуст.
+procedure openz(y,x:byte; var z:byte);          РїСѓСЃС‚.
 procedure automat0(y,x:byte;var otv:byte);      use(openb,cifra,around,all,open_)(var z; around(y,x,z...))
 function infstack:string;      [stkpointh,stkpointl,lenghtstack]use(its)(h:5,l:6,razm:6)
 procedure automat;
@@ -110,13 +121,13 @@ procedure fk2(y,x:byte;var otv:byte);
 procedure inczfk1(y,x:byte;var z:byte);
 function notflag(y,x:byte):boolean;
 procedure fk1(y,x:byte;var otv:byte);
-------------------------------------------------старт
+------------------------------------------------СЃС‚Р°СЂС‚
 function notcurs(ly,lx:byte):boolean;
 procedure checcurs(y,x:byte;var z:byte);
 procedure newgame;
-------------------------------------------------инициализация
-function readstr(var s:string;min,max:longint):longint;      [game(:=false если произошла ошибка)]
-                        (превращает первую подстроку(s)до запятой в число)(формат строки:повторение(число,запятая)ентер)
+------------------------------------------------РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
+function readstr(var s:string;min,max:longint):longint;      [game(:=false РµСЃР»Рё РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°)]
+                        (РїСЂРµРІСЂР°С‰Р°РµС‚ РїРµСЂРІСѓСЋ РїРѕРґСЃС‚СЂРѕРєСѓ(s)РґРѕ Р·Р°РїСЏС‚РѕР№ РІ С‡РёСЃР»Рѕ)(С„РѕСЂРјР°С‚ СЃС‚СЂРѕРєРё:РїРѕРІС‚РѕСЂРµРЅРёРµ(С‡РёСЃР»Рѕ,Р·Р°РїСЏС‚Р°СЏ)РµРЅС‚РµСЂ)
 procedure options;
 procedure error(s:string);
 procedure init;
@@ -199,7 +210,7 @@ procedure out(y,x:byte);
     begin
           if tinscr(y,x)
           then out0(y,x)
-        {else begin              -показывает все отрывающиеся автоматически клетки
+        {else begin              -РїРѕРєР°Р·С‹РІР°РµС‚ РІСЃРµ РѕС‚СЂС‹РІР°СЋС‰РёРµСЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РєР»РµС‚РєРё
                if y<scr.y        then scr.y:=y;
                if y>scr.y+scrh-1 then scr.y:=y-scrh+1;
                if x<scr.x        then scr.x:=x;
@@ -311,7 +322,7 @@ procedure outcurs(n,y_,x_:byte);
                  outall;
                   outlineage;
                   end
-             else mes('ошибка в выв');
+             else mes('РѕС€РёР±РєР° РІ РІС‹РІ');
              if game
              then inf:=its(y,1)+' '+its(x,1)
              else begin
@@ -454,9 +465,9 @@ procedure push(y,x:byte;var otv:byte);
               if stkpointh<lenghtstack
                then if stkpointh+1<>stkpointl
                 then inc(stkpointh)
-                else inf:=inf+' переполнение'
+                else inf:=inf+' РїРµСЂРµРїРѕР»РЅРµРЅРёРµ'
                else if stkpointl=0
-                    then inf:=inf+' переполнение'
+                    then inf:=inf+' РїРµСЂРµРїРѕР»РЅРµРЅРёРµ'
                     else stkpointh:=0;
               outinf;
                end
@@ -464,9 +475,9 @@ procedure push(y,x:byte;var otv:byte);
                if stkpointl>0
                then if stkpointh+1<>stkpointl
                 then dec(stkpointl)
-                else inf:=inf+' переполнение'
+                else inf:=inf+' РїРµСЂРµРїРѕР»РЅРµРЅРёРµ'
                else if stkpointh=lenghtstack
-                    then inf:=inf+' переполнение'
+                    then inf:=inf+' РїРµСЂРµРїРѕР»РЅРµРЅРёРµ'
                     else stkpointl:=lenghtstack;
                stack[stkpointl].x:=x;
               stack[stkpointl].y:=y;
@@ -557,7 +568,7 @@ procedure fk2(y,x:byte;var otv:byte);
 procedure inczfk1(y,x:byte;var z:byte);
        begin
           inc(z);
-          ppf[z]:=cifra(y,x);{виноватые флаги}
+          ppf[z]:=cifra(y,x);{РІРёРЅРѕРІР°С‚С‹Рµ С„Р»Р°РіРё}
           end;
 function notflag(y,x:byte):boolean;
    begin
@@ -624,7 +635,7 @@ procedure newgame;
 function readstr(var s:string;min,max:longint):longint;
          var subs:string;
              q:char;
-             i,j:integer;      // !!! из-за несовместимости с val заменен с word на integer
+             i,j:integer;      // !!! РёР·-Р·Р° РЅРµСЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃ val Р·Р°РјРµРЅРµРЅ СЃ word РЅР° integer
    begin           {if ... game:=folse}{mesp('readstr');{}          {.......}
          i:=0;
          repeat inc(i)
@@ -646,6 +657,7 @@ function readstr(var s:string;min,max:longint):longint;
          end;
 procedure options;
     var t1,t2:ttime;
+        q: char;
     procedure reiting;
                 begin                         {mesp('reiting');{}
                     end;
@@ -653,8 +665,11 @@ procedure options;
           clrscr;
           t1:=moygetabstime;
           repeat
-                         {...}
-          until readkey=#27;
+                q:=readkey;         {...}
+                writeyx(2,2,q);
+                if q='q' 
+                then halt(0);
+          until q=#27;
           if game and start
           then begin
                t2:=moygetabstime;
@@ -674,9 +689,9 @@ procedure error(s:string);
           var q:char;
     begin                                   {mesp('error');      {}
           clrscr;
-          writeyx(10,10,'ошибка файла состояния '+s);
+          writeyx(10,10,'РѕС€РёР±РєР° С„Р°Р№Р»Р° СЃРѕСЃС‚РѕСЏРЅРёСЏ '+s);
           readln;
-          repeat q:=readkey;                                               {выход или новое создание файла......}
+          repeat q:=readkey;                                               {РІС‹С…РѕРґ РёР»Рё РЅРѕРІРѕРµ СЃРѕР·РґР°РЅРёРµ С„Р°Р№Р»Р°......}
           until q=#27;
 
           options;
@@ -712,7 +727,7 @@ procedure init;
                goto 1;
                end;
                                                       {mes('reg-ok');    }
-          readln(f,s);                                                  {размер и др.}
+          readln(f,s);                                                  {СЂР°Р·РјРµСЂ Рё РґСЂ.}
           h0:=readstr(s,5,hmax);                      {mes('h0');         }
           l0:=readstr(s,5,lmax);                       {mes('l0');         }
           kolvomin:=readstr(s,5,h0*l0*2 div 3);         {      mes('kolvomin');}
@@ -733,18 +748,18 @@ procedure init;
           do with igr[i]
              do begin
                readln(f,name);
-                readln(f,up,down,left,right,k1,k2,kurs); {м.б.ош.}                 {кнопки и символы}
+                readln(f,up,down,left,right,k1,k2,kurs); {Рј.Р±.РѕС€.}                 {РєРЅРѕРїРєРё Рё СЃРёРјРІРѕР»С‹}
                 readln(f,s);
-                y:=readstr(s,1,h0);                                      {нач позиция курсоров}
+                y:=readstr(s,1,h0);                                      {РЅР°С‡ РїРѕР·РёС†РёСЏ РєСѓСЂСЃРѕСЂРѕРІ}
                 x:=readstr(s,1,l0);
-                end;                                               {...чтобы не совпадало}
+                end;                                               {...С‡С‚РѕР±С‹ РЅРµ СЃРѕРІРїР°РґР°Р»Рѕ}
                               {...random(x,y)}
           if not game
           then begin
                error('igroki');
                goto 1;
                end;
-          close(f);{но он не меняется}
+          close(f);{РЅРѕ РѕРЅ РЅРµ РјРµРЅСЏРµС‚СЃСЏ}
           initpole(h0,l0);
           scr.x:=1;
           scr.y:=1;
@@ -760,8 +775,8 @@ procedure init;
 procedure maincicl;
     var q:char;
     BEGIN                                      {    mesp('maicicl');{}
-      repeat init;                                  {Ц:игра}{init->game=true;start=false}
-             repeat repeat outtime;                     {Ц:обработка одной кнопки}{Ц:цикл ожидания}
+      repeat init;                                  {Р¦:РёРіСЂР°}{init->game=true;start=false}
+             repeat repeat outtime;                     {Р¦:РѕР±СЂР°Р±РѕС‚РєР° РѕРґРЅРѕР№ РєРЅРѕРїРєРё}{Р¦:С†РёРєР» РѕР¶РёРґР°РЅРёСЏ}
                           if stkpointh<>stkpointl
                            then automat;
                    until keypressed;
@@ -780,7 +795,7 @@ procedure maincicl;
                   then outcurs(i,y,x-1);
                   if (q=right)and(x<l0)
                   then outcurs(i,y,x+1);
-                          if game                      {после первого жмака start:=true}
+                          if game                      {РїРѕСЃР»Рµ РїРµСЂРІРѕРіРѕ Р¶РјР°РєР° start:=true}
                           then begin
                           if q=k1
                         then if notopen(y,x)
@@ -820,8 +835,9 @@ fk2_:=fk2;
 open_:=open;
 stkpointh:=0;
 stkpointl:=0;
+clrscr;
 writeyx(15,15,'saper professional........');
 writeyx(25,5,#169+'Uskov');
-readln;
+readkey;
 maincicl;
 end.

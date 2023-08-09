@@ -8,8 +8,8 @@ function  bit(x,n: byte): byte;
 procedure pbit(var x: byte; n: byte; b: boolean);
 
 procedure writeyx(y,x: byte; s: string);
-function  bts(x: boolean): string;{не использ.}
-function  its(x,l: longint): string;{не использ.}
+function  bts(x: boolean): string;{РЅРµ РёСЃРїРѕР»СЊР·.}
+function  its(x,l: longint): string;{РЅРµ РёСЃРїРѕР»СЊР·.}
 procedure mes(s: string);
 procedure mes_(s: string);
 
@@ -41,7 +41,7 @@ procedure pbit(var x: byte; n: byte; b: boolean);
                then inc(x,st(2,n))
                else dec(x,st(2,n));
           END;
-function  bts(x: boolean): string;{не использ.}
+function  bts(x: boolean): string;{РЅРµ РёСЃРїРѕР»СЊР·.}
           var s: string;
           BEGIN
           if x
@@ -49,7 +49,7 @@ function  bts(x: boolean): string;{не использ.}
              else s:='false';
           bts:=s;
           END;
-function  its(x,l: longint): string;{не использ.}
+function  its(x,l: longint): string;{РЅРµ РёСЃРїРѕР»СЊР·.}
           var s: string;
           BEGIN
           str(x:l,s);

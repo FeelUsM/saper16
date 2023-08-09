@@ -1,6 +1,6 @@
 UNIT mytime;
 INTERFACE
-uses utils;
+uses sysutils;
 type Ttime=record
            s: longint;
            ss: byte;
@@ -13,9 +13,9 @@ procedure StopGoTime;
 
 var timefrost: boolean;
     time0: ttime;
-{в остановленном состоянии time0 - время со старта
-в идущем - время старта
-!!!не учиьывает полночь}
+{РІ РѕСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРј СЃРѕСЃС‚РѕСЏРЅРёРё time0 - РІСЂРµРјСЏ СЃРѕ СЃС‚Р°СЂС‚Р°
+РІ РёРґСѓС‰РµРј - РІСЂРµРјСЏ СЃС‚Р°СЂС‚Р°
+!!!РЅРµ СѓС‡РёСЊС‹РІР°РµС‚ РїРѕР»РЅРѕС‡СЊ}
 IMPLEMENTATION
 
 function  dt(x1,x2: ttime): Ttime;
@@ -36,13 +36,14 @@ function  dt(x1,x2: ttime): Ttime;
           dt:=rez;
           END;
 function  moyGetAbsTime: ttime;{abs}
-          var dt: DateTime;
-              t: Ttime;
+          var t: Ttime;
+              Hour, Minute, Second, MilliSecond: Word;
           BEGIN
 //          gettime(h,m,s,ss);
-          dt:=currentdatetime;
-          t.s:=(dt.Hour*60+dt.Minute)*60+dt.second;
-          t.ss:=trunc(dt.milliseconds/10);
+          DecodeTime(Now,Hour, Minute, Second, MilliSecond);
+          t.s:=(Hour*60+Minute)*60+second;
+          t.ss:=trunc(millisecond/10);
+          moyGetAbsTime := t;
           END;
 procedure starttime;
           BEGIN
