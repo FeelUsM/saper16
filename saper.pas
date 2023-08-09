@@ -1,17 +1,10 @@
 {todo:
-определение текущей директории для cfg-файла
-справка о том, 
-    как закрыть,
-    как управлять
-    где cfg-файл
-    какие цифры что означают
-    оставить одного пользователя
     добавить управление стрелками
     правую линейку
 }
 {программа должна компилироваться в TPW}
 program saper_professional;
-uses crt,moy,baseofsa,mytime;
+uses crt,moy,baseofsa,mytime,sysutils;
 {x - горизонталь,y - вертикаль}              {$F+}
 const min='*';
       fl='!';
@@ -665,8 +658,16 @@ procedure options;
           clrscr;
           t1:=moygetabstime;
           repeat
+                writeln('press Q to exit');
+                for i:=1 to kolvoigr
+                do with igr[i]
+                   do begin
+                      writeln('gamer',i,':',name);
+                      writeln('  moving:',up,down,left,right);
+                      writeln('  open_key, flag_key:',k1,k2);
+                      end;                                   
+
                 q:=readkey;         {...}
-                writeyx(2,2,q);
                 if q='q' 
                 then halt(0);
           until q=#27;
@@ -698,6 +699,7 @@ procedure error(s:string);
           end;
 procedure init;
           var f:text;
+              pathcfg:string;
         s,s1:string;
               i,j:byte;
           label 1;
@@ -705,10 +707,50 @@ procedure init;
           1:
           start:=false;
           game:=true;
-          assign(f,configf);
+          pathcfg:=ExtractFilePath(paramStr(0))+configf;
+          if not FileExists(pathcfg)
+          then begin
+               assign(f,pathcfg);
+               reset(f);
+               writeln('flaging+');
+               writeln('auto+');
+               writeln('100,100,2000,2,');
+               writeln('qwerty');
+               writeln('5213/.#');
+               writeln('5,10,');
+               writeln('uiop');
+               writeln('fvcbxz$');
+               writeln('7,57,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               writeln('Fil');
+               writeln('5213/.$');
+               writeln('5,10,');
+               close(f);
+               end;
+          assign(f,pathcfg);
           reset(f);
           readln(f,s);
-         if   s='nonflaging'  then reginput:=nonfluging                  {reginput}
+          if   s='nonflaging'  then reginput:=nonfluging                  {reginput}
           else if s='standart' then reginput:=standart
           else if s='flaging'  then reginput:=fluging1
           else if s='flaging+' then reginput:=fluging2
@@ -837,7 +879,11 @@ stkpointh:=0;
 stkpointl:=0;
 clrscr;
 writeyx(15,15,'saper professional........');
-writeyx(25,5,#169+'Uskov');
+writeyx(25,5,'(c)Uskov');
+writeln;
+writeln;
+writeln('press any key to start');
+writeln('then press ESC to help');
 readkey;
 maincicl;
 end.
