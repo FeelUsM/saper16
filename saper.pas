@@ -684,6 +684,7 @@ procedure options;
                     inc(time0.s);
                     end;
                end;
+          clrscr;
           outall;
           end;
 procedure error(s:string);
